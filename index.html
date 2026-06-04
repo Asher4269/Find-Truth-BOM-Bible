@@ -3,14 +3,39 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Find Truth</title>
-    <script defer src="script.js"></script>
+    <title>Scripture Witness</title>
     <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
-    <header></header>
-    <nav></nav>
-    <main></main>
-    <footer></footer>
+    <div class="container">
+      <h1>Scripture Witness</h1>
+
+      <p class="subtitle">Search the Bible and Book of Mormon together</p>
+
+      <div class="search-container">
+        <input
+          type="text"
+          id="searchInput"
+          placeholder="Search for faith, charity, resurrection..."
+        />
+        <button id="searchButton">Search</button>
+      </div>
+
+      <div id="loading" class="hidden">Searching...</div>
+
+      <div class="results-grid">
+        <div class="results-panel">
+          <h2>Bible</h2>
+          <div id="bibleResults"></div>
+        </div>
+
+        <div class="results-panel">
+          <h2>Book of Mormon</h2>
+          <div id="bomResults"></div>
+        </div>
+      </div>
+    </div>
+
+    <script src="app.js"></script>
   </body>
 </html>
