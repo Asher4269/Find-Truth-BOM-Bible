@@ -167,7 +167,7 @@ function escapeRegex(str) {
 function highlight(text, query) {
   if (!query) return text;
 
-  const regex = new RegExp(`(${escapeRegex(query)})`, "gi");
+  const regex = new RegExp(`\\b${escapeRegex(query)}\\b`, "i");
 
   return text.replace(regex, "<mark>$1</mark>");
 }
