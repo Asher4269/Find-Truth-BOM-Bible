@@ -72,6 +72,11 @@ h1 {
   margin-bottom: 20px;
 }
 
+mark {
+  background: #fff59d;
+  padding: 2px;
+}
+
 .verse {
   padding: 15px;
   margin-bottom: 12px;
