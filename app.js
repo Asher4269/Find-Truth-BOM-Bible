@@ -23,6 +23,16 @@ const bibleCount = document.getElementById("bibleCount");
 
 const bomCount = document.getElementById("bomCount");
 
+const resultsGrid = document.querySelector(".results-grid");
+
+const comparisonCard = document.getElementById("comparisonCard");
+
+const showAllButton = document.getElementById("showAllButton");
+
+const featuredBible = document.getElementById("featuredBible");
+
+const featuredBom = document.getElementById("featuredBom");
+
 // =====================================================
 // LOAD DATA
 // =====================================================
@@ -97,11 +107,53 @@ async function loadData() {
 function searchVerses(query) {
   const regex = new RegExp(`\\b${escapeRegex(query)}\\b`, "i");
 
-  return {
-    bible: bibleVerses.filter((v) => regex.test(v.text)).slice(0, MAX_RESULTS),
+  const bibleMatches = bibleVerses.filter((v) => regex.test(v.text));
 
-    bom: bomVerses.filter((v) => regex.test(v.text)).slice(0, MAX_RESULTS),
+  const bomMatches = bomVerses.filter((v) => regex.test(v.text));
+
+  return {
+    bible: bibleMatches.slice(0, MAX_RESULTS),
+
+    bom: bomMatches.slice(0, MAX_RESULTS),
+
+    bibleTotal: bibleMatches.length,
+
+    bomTotal: bomMatches.length,
+
+    allBible: bibleMatches,
+
+    allBom: bomMatches,
   };
+}
+
+function randomVerse(array) {
+  if (!array || array.length === 0) {
+    return null;
+  }
+
+  const index = Math.floor(Math.random() * array.length);
+
+  return array[index];
+}
+
+function renderFeaturedVerse(verse, container, query) {
+  if (!verse) {
+    container.innerHTML = "<p>No verse found.</p>";
+
+    return;
+  }
+
+  container.innerHTML = `
+
+        <div class="reference">
+            ${verse.reference}
+        </div>
+
+        <div class="text">
+            ${highlight(verse.text, query)}
+        </div>
+
+    `;
 }
 
 // =====================================================
@@ -163,9 +215,21 @@ function performSearch() {
 
   const results = searchVerses(query);
 
-  bibleCount.textContent = `${results.bible.length} verses`;
+  bibleCount.textContent = `${results.bibleTotal} verses`;
 
-  bomCount.textContent = `${results.bom.length} verses`;
+  bomCount.textContent = `${results.bomTotal} verses`;
+
+  const randomBible = randomVerse(results.allBible);
+
+  const randomBom = randomVerse(results.allBom);
+
+  renderFeaturedVerse(randomBible, featuredBible, query);
+
+  renderFeaturedVerse(randomBom, featuredBom, query);
+
+  comparisonCard.classList.remove("hidden");
+
+  resultsGrid.style.display = "none";
 
   renderVerses(results.bible, bibleResults, query);
 
@@ -186,6 +250,12 @@ searchInput.addEventListener("keydown", (e) => {
   if (e.key === "Enter") {
     performSearch();
   }
+});
+
+showAllButton.addEventListener("click", () => {
+  resultsGrid.style.display = "grid";
+
+  showAllButton.style.display = "none";
 });
 
 // =====================================================
