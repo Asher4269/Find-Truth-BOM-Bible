@@ -91,16 +91,12 @@ async function loadData() {
 // =====================================================
 
 function searchVerses(query) {
-  const q = query.toLowerCase();
+  const regex = new RegExp(`\\b${escapeRegex(query)}\\b`, "i");
 
   return {
-    bible: bibleVerses
-      .filter((v) => v.text.toLowerCase().includes(q))
-      .slice(0, MAX_RESULTS),
+    bible: bibleVerses.filter((v) => regex.test(v.text)).slice(0, MAX_RESULTS),
 
-    bom: bomVerses
-      .filter((v) => v.text.toLowerCase().includes(q))
-      .slice(0, MAX_RESULTS),
+    bom: bomVerses.filter((v) => regex.test(v.text)).slice(0, MAX_RESULTS),
   };
 }
 
