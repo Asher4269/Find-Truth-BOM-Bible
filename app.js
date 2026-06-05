@@ -29,8 +29,8 @@ async function loadData() {
 
   try {
     const [bibleResponse, bomResponse] = await Promise.all([
-      fetch("data/bible.json"),
-      fetch("data/book_of_mormon.json"),
+      fetch("scriptures/bible.json"),
+      fetch("scriptures/book_of_mormon.json"),
     ]);
 
     const bible = await bibleResponse.json();
