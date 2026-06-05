@@ -19,6 +19,10 @@ const bomResults = document.getElementById("bomResults");
 
 const loading = document.getElementById("loading");
 
+const bibleCount = document.getElementById("bibleCount");
+
+const bomCount = document.getElementById("bomCount");
+
 // =====================================================
 // LOAD DATA
 // =====================================================
@@ -158,6 +162,10 @@ function performSearch() {
   if (!query) return;
 
   const results = searchVerses(query);
+
+  bibleCount.textContent = `${results.bible.length} verses`;
+
+  bomCount.textContent = `${results.bom.length} verses`;
 
   renderVerses(results.bible, bibleResults, query);
 
